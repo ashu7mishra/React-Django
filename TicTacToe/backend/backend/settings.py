@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',    # Django REST framework
     'corsheaders',       # Enable CORS
+    'channels',        # New: Channels for WebSocket support
     'game',              # Our Tic-Tac-Toe app
 ]
 
@@ -125,6 +126,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ASGI settings for WebSockets
+ASGI_APPLICATION = 'backend.asgi.application'
+
+# Channel layers for real-time communication
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Allow all origins for development
 CORS_ALLOW_ALL_ORIGINS = True
